@@ -74,10 +74,11 @@ footer {
   width: 100%;
   position: fixed;
   bottom: 0;
+  height: 4em;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: bottom;
 }
 
 .interface-footer {
@@ -126,7 +127,7 @@ footer {
     <div class="interface-footer">
       <button class="btn-clear">Clear</button>
     </div>
-    <div class="credits">2020 Joel Zehring</div>
+    <p class="credits">2020 Joel Zehring</p>
   </footer>
 
 <!-- <script src="assets/javascript/app.js" type="text/javascript"></script> -->
@@ -156,9 +157,33 @@ function buttonize(arr) {
 // function to handle search term button clicks. See below for event listener on document
 function getGifs(e){
   // ajax request to giphy
+  var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=HPKjvFB3IiW09s2mWgpmcSAT8Xkp7YpX&q=mickeymouse&limit=25&offset=0&rating=G&lang=en";
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response)
+    var playURL = response.data[0].images.downsized_medium.url;
+    var pauseURL = response.data[0].images.fixed_height_still.url;
+    
+    // for each object in the repsonse, create a div card to display image
+    var newDiv = $("<div>");
+    newDiv.addClass("card");
+    var img = $("<img>");
+    img.attr("src", pauseURL);
+    img.attr("image-play", playURL);
+    img.attr("image-pause", pauseURL);
+    img.attr("playing", false);
+    var p = $("<p>");
+    p.text($(e.target).attr("query"));
+    newDiv.append(img);
+    newDiv.append(p);
+    $(".display").prepend(newDiv);
+    newDiv.hide();
+    newDiv.show(100);
+  });
 
-  // for each object in the repsonse, create a div card to display image
-
+  /*
   // test the event 
   var newDiv = $("<div>");
   newDiv.addClass("card");
@@ -168,6 +193,7 @@ function getGifs(e){
   $(".display").prepend(newDiv);
   newDiv.hide();
   newDiv.show(100);
+  */
 
   // show clear button only if gifs are displayed
   if ($(".card").length > 0) {
