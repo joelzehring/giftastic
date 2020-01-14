@@ -143,12 +143,14 @@ var searchTerms = ["spongebob","gumball","teen titans go"];
 function buttonize(arr) {
   $(".button-area").empty();
   for (var i of arr) {
-    var button = $("<button>");
-    button.addClass("search-term");
-    button.attr("query", i);
-    button.text(i);
-    $(".button-area").append(button);
+      var button = $("<button>");
+      button.addClass("search-term");
+      button.attr("query", i);
+      button.text(i);
+      $(".button-area").append(button);
   }
+  $(".search-term:last").hide();
+  $(".search-term:last").fadeIn(100);
 }
 
 // function to handle search term button clicks. See below for event listener on document
@@ -164,10 +166,12 @@ function getGifs(e){
   p.text($(e.target).attr("query"));
   newDiv.append(p);
   $(".display").prepend(newDiv);
+  newDiv.hide();
+  newDiv.show(100);
 
   // show clear button only if gifs are displayed
   if ($(".card").length > 0) {
-    $(".btn-clear").show(100);
+    $(".btn-clear").fadeIn(100);
   }
 }
 
@@ -189,7 +193,7 @@ function handleSubmit(e) {
 
 function handleClear(){
   $(".display").empty();
-  $(".btn-clear").hide(100);
+  $(".btn-clear").fadeOut(100);
 }
 
 buttonize(searchTerms);
@@ -198,6 +202,7 @@ buttonize(searchTerms);
 $(document).on("click",".search-term", getGifs);
 $(document).on("click",".btn-submit", handleSubmit);
 $(document).on("click",".btn-clear", handleClear);
+$(document).on("ready",".search-term", function(){$(this).show(100)});
 
 }); // jQuery end
 
