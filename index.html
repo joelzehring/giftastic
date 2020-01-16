@@ -62,11 +62,6 @@ input[type=submit] {
 }
 
 .card {
-  background: gray;
-  /* height:180px;
-  width:180px; */
-  border: 1px solid gray;
-  border-radius: 3px;
   margin: 2px;
 }
 
@@ -146,6 +141,7 @@ function buttonize(arr) {
   for (var i of arr) {
       var button = $("<button>");
       button.addClass("search-term");
+      button.attr("offset",0);
       button.attr("query", i);
       button.text(i);
       $(".button-area").append(button);
@@ -158,11 +154,13 @@ function buttonize(arr) {
 function getGifs(e){
   // ajax request to giphy
   var search = $(e.target).attr("query");
+  var offSetAttr = $(e.target).attr("offset");
   var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=HPKjvFB3IiW09s2mWgpmcSAT8Xkp7YpX"
   + "&q=" + search
   + "&limit=1"
-  + "&offset=0"
+  + "&offset=" + eval(offSetAttr);
   + "&rating=G&lang=en";
+  $(e.target).attr("offset",eval(offSetAttr) + 1);
 
   $.ajax({
     url: queryURL,
@@ -170,7 +168,7 @@ function getGifs(e){
   }).then(function(response) {
     console.log(response)
     for ( var i of response.data ) {
-      var playURL = i.images.downsized_medium.url;
+      var playURL = i.images.fixed_height.url;
       var pauseURL = i.images.fixed_height_still.url;
       
       // for each object in the repsonse, create a div card to display image
