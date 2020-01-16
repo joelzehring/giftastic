@@ -138,7 +138,7 @@ $(document).ready(function() { // jQuery start
 
 $(".btn-clear").hide();
 
-var searchTerms = ["spongebob","gumball","teen titans go"];
+var searchTerms = ["spongebob","amazing world of gumball","teen titans go"];
 
 // render terms in search array as buttons on the page
 function buttonize(arr) {
@@ -241,9 +241,16 @@ function togglePlaying(e){
   var playURL =$(e.target).attr("image-play");
   var pauseURL = $(e.target).attr("image-pause");
 
-  if (!isPlaying) {
+  console.log(e.target)
+
+  if (isPlaying === "false") {
     $(e.target).attr("src",playURL);
-    $(e.target).isPlaying = true;
+    $(e.target).attr("playing",true);
+  } 
+  
+  else if (isPlaying === "true") {
+    $(e.target).attr("src",pauseURL);
+    $(e.target).attr("playing",false);
   }
 }
 
