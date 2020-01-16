@@ -177,6 +177,7 @@ function getGifs(e){
       var newDiv = $("<div>");
       newDiv.addClass("card");
       var img = $("<img>");
+      img.addClass("img-result");
       img.attr("src", pauseURL);
       img.attr("image-play", playURL);
       img.attr("image-pause", pauseURL);
@@ -228,11 +229,25 @@ function handleSubmit(e) {
   }
 }
 
+// Clear all gifs from display
 function handleClear(){
   $(".display").empty();
   $(".btn-clear").fadeOut(100);
 }
 
+// clicking an image plays or pauses animation
+function togglePlaying(e){
+  var isPlaying = $(e.target).attr("playing");
+  var playURL =$(e.target).attr("image-play");
+  var pauseURL = $(e.target).attr("image-pause");
+
+  if (!isPlaying) {
+    $(e.target).attr("src",playURL);
+    $(e.target).isPlaying = true;
+  }
+}
+
+// Populate example buttons at first launch
 buttonize(searchTerms);
 
 // Global event listeners
@@ -240,8 +255,12 @@ $(document).on("click",".search-term", getGifs);
 $(document).on("click",".btn-submit", handleSubmit);
 $(document).on("click",".btn-clear", handleClear);
 $(document).on("ready",".search-term", function(){$(this).show(100)});
+$(document).on("click",".img-result",togglePlaying);
 
 }); // jQuery end
+
+// play pause
+// favorite gif
 
 </script>
 
