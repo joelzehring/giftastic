@@ -65,6 +65,12 @@ input[type=submit] {
   margin: 2px;
 }
 
+.caption {
+}
+
+.caption:hover {
+}
+
 footer {
   width: 100%;
   position: fixed;
@@ -181,6 +187,7 @@ function getGifs(e){
       img.attr("image-pause", pauseURL);
       img.attr("playing", false);
       var p = $("<p>");
+      p.addClass("caption");
       p.text($(e.target).attr("query"));
       newDiv.append(img);
       newDiv.append(p);
