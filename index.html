@@ -189,17 +189,23 @@ function getGifs(e){
       // for each object in the repsonse, create a div card to display image
       var newDiv = $("<div>");
       newDiv.addClass("card");
+
       var img = $("<img>");
       img.addClass("img-result");
       img.attr("src", pauseURL);
       img.attr("image-play", playURL);
       img.attr("image-pause", pauseURL);
       img.attr("playing", false);
-      var p = $("<p>");
-      p.addClass("caption");
-      p.text($(e.target).attr("query"));
+      
+      
+      var rating = $("<p>");
+      rating.addClass("caption");
+      rating.text("Rating: " + i.rating);
+      
+      
       newDiv.append(img);
-      newDiv.append(p);
+      newDiv.append(rating);
+
       $(".display").prepend(newDiv);
       newDiv.hide();
       newDiv.show(100);
